@@ -4,10 +4,13 @@ package superfriends.universitytimesapp;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.text.Html;
 import android.view.Menu;
-import android.widget.TextView;
+import android.webkit.WebView;
 
+/*Test class that displays html text from the bundle that it was 
+ * created with
+ * references
+ * http://developer.android.com/reference/android/webkit/WebView.html*/
 public class DisplayHTML extends Activity {
 
 	@Override
@@ -15,8 +18,10 @@ public class DisplayHTML extends Activity {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		String received_html = intent.getStringExtra(MainActivity.HTML_PAGE);
-		TextView view = new TextView(this);
-		view.setText(Html.fromHtml(received_html));
+		WebView view = new WebView(this);
+		view.loadData(received_html, "text/html", "UTF-8");
+		setContentView(view);
+
 	}
 
 	@Override
