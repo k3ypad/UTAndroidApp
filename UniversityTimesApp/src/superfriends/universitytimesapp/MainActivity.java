@@ -1,11 +1,16 @@
 package superfriends.universitytimesapp;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 
+
+//this class is just for testing at the moment
 public class MainActivity extends Activity implements QueryListener {
 
     public static final String HTML_PAGE = "superfriends.universitytimesapp.HTML_PAGE";
@@ -14,6 +19,15 @@ public class MainActivity extends Activity implements QueryListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+    	try {
+			ConnectionManager.INSTANCE.connectToServer("utdummy.tfa.ie", 8080);
+		} catch (UnknownHostException e) {
+			System.out.println("Could not connect to server " + e.toString());
+		} catch (IOException e) {
+			System.out.println("IO problem : " + e.toString());
+			e.printStackTrace();
+		}
     }
 
 
@@ -25,13 +39,7 @@ public class MainActivity extends Activity implements QueryListener {
     }
     /*at the moment method invoked from xml button onclick attribute*/
     public void sendQuery(View view){
-    	/*UTRequest(<activity to send back info>,<host>,<port to connect to on host>)*/
-    	UTRequest req = new UTRequest(this,"utdummy.tfa.ie",8080);
-    	/*make a non-blocking request to server. Data returned will be through
-    	 * the receiveResult(result) method below. Any activity that wants to 
-    	 * use UTRequest then it must subscribe to the QueryListener interface.*/
-    	req.execute("h3ll0");  
-	
+    	ConnectionManager.INSTANCE.fetchDummyArticle(this);
     }
 
     /*when UTRequest is ready it will execute its own onPostExecute which in turn
