@@ -1,6 +1,5 @@
 package superfriends.universitytimesapp;
 
-import android.graphics.Bitmap;
 
 public class Article{
     //member fields
@@ -8,18 +7,20 @@ public class Article{
 	private String heading;
 	private String body;
 	private String url;
-	
-	
-	
+	private String tag;
+
+
+
 	public Article(){
-		
+
 	}
-	
-	public Article(String name,int id, String heading, String body,String url){
+
+	public Article(int id, String heading,String tag, String body,String url){
 		this.id = id;
 		this.heading = heading;
 		this.body = body;
 		this.url = url;
+		this.tag = tag;
 	}
 
 	public String getHeading() {
@@ -50,6 +51,14 @@ public class Article{
 	public int getId() {
 		return id;
 	}
-	
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 
 }

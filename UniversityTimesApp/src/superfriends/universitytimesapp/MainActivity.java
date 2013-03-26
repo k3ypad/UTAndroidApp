@@ -2,10 +2,11 @@ package superfriends.universitytimesapp;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
@@ -39,7 +40,8 @@ public class MainActivity extends Activity implements QueryListener {
     }
     /*at the moment method invoked from xml button onclick attribute*/
     public void sendQuery(View view){
-    	ConnectionManager.INSTANCE.fetchDummyArticle(this);
+    	ArticleManager articleManager = new ArticleManager();
+    	ArrayList<Article> articles = articleManager.getLatestArticles(5);
     }
 
     /*when UTRequest is ready it will execute its own onPostExecute which in turn
