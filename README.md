@@ -15,9 +15,10 @@ The application is pre-configured as an example for Trinity College Dublin's stu
 
 This platform was developed by Computer Science Students taking module CS3013.
 Original authors:
-@k3ypad - Server-side python application, infrastructure, installation script + documentation.
 
-@dwyerci - Back-end for Android application, documentation.
+@k3ypad - Server-side python application, infrastructure, installation script + documentation
+
+@dwyerci - Back-end for Android application, documentation
 
 @EoinHiggins  - Back-end for Android application
 
