@@ -22,6 +22,8 @@ public class ArticleManager{
 	private InputStream is = null;
 	private JSONObject jObj = null;
 	private String json = "";
+	private static int currentId =0;
+	public static final int MAX_ARTICLES = 200;
 
 	public JSONObject getJSONFromUrl(String url) throws JSONException {
 
@@ -40,7 +42,6 @@ public class ArticleManager{
 
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-			System.out.println("Hey2 ");
 			StringBuilder sb = new StringBuilder();
 			String line = "";
 
@@ -69,11 +70,46 @@ public class ArticleManager{
 			Log.e("Buffer Error", "Error converting Result " + e.toString());
 		}
 		// return JSON String
-		System.out.println(jObj);
+		System.out.println(" jOBJ " + jObj);
 		return jObj;
 
 	}
 
+	public Article getNextArticle() throws JSONException{
+		jObj = null;
+		String sb = "";
+		while(jObj==null){
+			currentId++;
+			if(currentId == 200){
+				currentId = 0;
+			}
+			System.out.println("THE CURRENTE ID IS : "+ currentId);
+			sb= sb + "http://utdummy.tfa.ie/";
+			sb = sb + currentId;
+			sb = sb +".json";
+
+			try {
+				JSONObject jObj = getJSONFromUrl(sb);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			sb = "";
+			if(jObj!=null){
+				Article myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
+						jObj.getString("Post_tag")
+						,jObj.getString("Post_body"), jObj.getString("Thumb_url"));
+				System.out.println("HI " + myArticle.getId());
+				System.out.println("HI " + myArticle.getTag());
+				System.out.println("HI " + myArticle.getHeading());
+				System.out.println("HI " + myArticle.getBody());
+				System.out.println("HI " + myArticle.getUrl());
+			}
+		}
+
+		return null;
+	}
 
 	public ArrayList<Article> getLatestArticles(int number){
 		ArrayList<Article> articles = new ArrayList<Article>();
@@ -88,7 +124,7 @@ public class ArticleManager{
 				Article myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
 						jObj.getString("Post_tag")
 						,jObj.getString("Post_body"), jObj.getString("Thumb_url"));
-
+				currentId = myArticle.getId();
 				System.out.println("HI " + myArticle.getId());
 				System.out.println("HI " + myArticle.getHeading());
 				System.out.println("HI " + myArticle.getBody());
@@ -153,3 +189,4 @@ public class ArticleManager{
   }     
 	 */
 }
+
