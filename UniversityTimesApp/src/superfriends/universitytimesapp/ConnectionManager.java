@@ -22,9 +22,7 @@ public enum ConnectionManager {
 	
 	public void connectToServer(String host, int port) throws UnknownHostException, IOException{
 		//this ugly piece of code is needed for now otherwise would not allow to connect socket
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-		
+
 		if(connected){ // in case of reconnect
 			socket.close();
 		}
