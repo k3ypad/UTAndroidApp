@@ -31,15 +31,12 @@ public class ArticleManager{
 		try {
 			// default HTTPClient
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-
 			HttpGet httpGet = new HttpGet(url);
 
-			HttpResponse httpResponse = httpClient.execute(httpGet);
-			System.out.println("The status " + httpResponse.getStatusLine().getStatusCode());
-			HttpEntity httpEntity = httpResponse.getEntity();
-			is = httpEntity.getContent();
-
-
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            System.out.println("The status " + httpResponse.getStatusLine().getStatusCode());
+            HttpEntity httpEntity = httpResponse.getEntity();
+            is = httpEntity.getContent();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 			StringBuilder sb = new StringBuilder();
@@ -51,9 +48,6 @@ public class ArticleManager{
 			is.close();
 			json = sb.toString();
 
-
-			//try parse the string to a JSON object
-
 			jObj = new JSONObject(json);
 		}catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -61,10 +55,7 @@ public class ArticleManager{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-
-		catch (JSONException e) {
-
+		}catch (JSONException e) {
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		} catch (Exception e) {
 			Log.e("Buffer Error", "Error converting Result " + e.toString());
@@ -78,57 +69,47 @@ public class ArticleManager{
 	public Article getNextArticle() throws JSONException{
 		jObj = null;
 		String sb = "";
+        Article myArticle = null;
 		while(jObj==null){
 			currentId++;
 			if(currentId == 200){
 				currentId = 0;
-			}
-			System.out.println("THE CURRENTE ID IS : "+ currentId);
+            }
 			sb= sb + "http://utdummy.tfa.ie/";
 			sb = sb + currentId;
 			sb = sb +".json";
 
 			try {
-				JSONObject jObj = getJSONFromUrl(sb);
+				JSONObject jObj = getJSONFromUrl(sb.toString());
+                if(jObj == null ){
+                    System.out.println("we fucked up" + currentId);
+                }
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			sb = "";
 			if(jObj!=null){
-				Article myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
+				 myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
 						jObj.getString("Post_tag")
 						,jObj.getString("Post_body"), jObj.getString("Thumb_url"));
-				System.out.println("HI " + myArticle.getId());
-				System.out.println("HI " + myArticle.getTag());
-				System.out.println("HI " + myArticle.getHeading());
-				System.out.println("HI " + myArticle.getBody());
-				System.out.println("HI " + myArticle.getUrl());
+                Log.i("article id: ", String.valueOf(myArticle.getId()));
 			}
 		}
 
-		return null;
+		return myArticle;
 	}
 
 	public ArrayList<Article> getLatestArticles(int number){
 		ArrayList<Article> articles = new ArrayList<Article>();
 		for(int i=0 ; i< number; i++){
-			StringBuilder sb = new StringBuilder();
-			sb.append("http://utdummy.tfa.ie/");
-			sb.append(i);
-			sb.append(".json");
-
 			try {
-				JSONObject jObj = getJSONFromUrl("http://utdummy.tfa.ie/10.json");
-				Article myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
-						jObj.getString("Post_tag")
-						,jObj.getString("Post_body"), jObj.getString("Thumb_url"));
+				Article myArticle = getNextArticle();
 				currentId = myArticle.getId();
 				System.out.println("HI " + myArticle.getId());
-				System.out.println("HI " + myArticle.getHeading());
-				System.out.println("HI " + myArticle.getBody());
-				System.out.println("HI " + myArticle.getUrl());
+//				System.out.println("HI " + myArticle.getHeading());
+//				System.out.println("HI " + myArticle.getBody());
+//				System.out.println("HI " + myArticle.getUrl());
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

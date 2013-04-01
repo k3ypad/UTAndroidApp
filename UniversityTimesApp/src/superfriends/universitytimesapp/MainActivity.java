@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.View;
 
@@ -17,17 +18,11 @@ public class MainActivity extends Activity implements QueryListener {
     public static final String HTML_PAGE = "superfriends.universitytimesapp.HTML_PAGE";
 
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-    	try {
-			ConnectionManager.INSTANCE.connectToServer("utdummy.tfa.ie", 8080);
-		} catch (UnknownHostException e) {
-			System.out.println("Could not connect to server " + e.toString());
-		} catch (IOException e) {
-			System.out.println("IO problem : " + e.toString());
-			e.printStackTrace();
-		}
+
     }
     
     public void otherActivity(View view) {
