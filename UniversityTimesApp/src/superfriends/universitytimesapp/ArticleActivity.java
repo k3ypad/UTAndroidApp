@@ -3,6 +3,7 @@ package superfriends.universitytimesapp;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +15,15 @@ import android.support.v4.app.NavUtils;
 
 public class ArticleActivity extends Activity {
     static LayoutParams lpsmallbutton = new LayoutParams(LayoutParams.MATCH_PARENT, 50);
+    static String ArticleBody;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Intent intent= getIntent();
+		ArticleBody = intent.getStringExtra("maintext"); // will return "FirstKeyValue"
+		
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.activity_article);
 		setupActionBar();
@@ -60,12 +66,12 @@ public void ArticleLayout() {
 		
 		// Creates a TextView which houses the article and makes it scrollable
 		TextView article = new TextView(this);	
-		article.setText(body);
+		article.setText(ArticleBody);
 		
 		// Adds everything to the layout with indexes
-	    lla.addView(ii, 0);
-		lla.addView(article, 1);
-		lla.addView(qna, 2, lpsmallbutton);
+	    //lla.addView(ii, 0);
+		lla.addView(article, 0);
+		lla.addView(qna, 1, lpsmallbutton);
 	}
 
 	@Override

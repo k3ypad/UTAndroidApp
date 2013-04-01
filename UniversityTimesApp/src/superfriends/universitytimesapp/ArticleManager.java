@@ -105,6 +105,7 @@ public class ArticleManager{
         for(int i=0 ; i< number; i++){
             try {
                 Article myArticle = getNextArticle();
+                articles.add(myArticle);
                 currentId = myArticle.getId();
                 System.out.println("HI " + myArticle.getId());
 //				System.out.println("HI " + myArticle.getHeading());

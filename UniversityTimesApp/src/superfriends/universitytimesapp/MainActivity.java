@@ -12,58 +12,87 @@ import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
 
 //this class is just for testing at the moment
 public class MainActivity extends Activity implements QueryListener {
 
     public static final String HTML_PAGE = "superfriends.universitytimesapp.HTML_PAGE";
-    static LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    static LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 200);
+    static ArrayList<Article> articles;
+    static Article a;
+    static Button myButton;
+    static final int count = 4;
+    public static String tag = null;
+    static ArrayList<Button> buttonlist;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	    buttonlist = new ArrayList<Button>();
+	    
+		getActionBar().setDisplayShowTitleEnabled(false);
+
+		if(tag == null){
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         ArticleManager articleManager = new ArticleManager();
-        ArrayList<Article> articles = articleManager.getLatestArticles(5);
-        getActionBar().setDisplayShowTitleEnabled(false);
+        
+        String headin;
+		final Intent intent = new Intent(this, ArticleActivity.class);
+		
+		articles = articleManager.getLatestArticles(count);
 
-	    ButtonLayout();
+		OnClickListener listener = new OnClickListener() {
+            @Override
+            public void onClick(View myButton) {
+                int code = myButton.getId();
+                System.out.println("button" + code);
+                a = articles.get(code);
+                String boddy = a.getBody(code);
+        		intent.putExtra("maintext", boddy);
+        		startActivity(intent);
+                }
+            };
+        
+                for(int l = 0; l < count; l++){
+                	myButton = new Button(this);
+        			
+        			// Set the click listener to all your buttons
+        	        myButton.setOnClickListener(listener);
+        			
+        			a = articles.get(l);
+        			headin = a.getHeading();
+        			
+        			//Sets text and id to button
+        			myButton.setText(headin);
+        			myButton.getBackground().setAlpha(45);
+        			myButton.setId(l);
+        			buttonlist.add(myButton);
+         }
+	     ButtonLayout();
+		}
     }
 	
 	public void ButtonLayout() { 
 		//Creates new layout and params to go with
 		final LinearLayout llb = (LinearLayout)findViewById(R.id.buttonlayout);
-		String head = getString(R.string.dummyHead);
-		final Intent intent = new Intent(this, ArticleActivity.class);
-		 
+		
+		
 		//Creates new buttons and indexes
-		for(int i = 0; i < 15; i++) {
-			
-			//Article a = articles.get(i);
-			//headin = a.getHeading();
-			 
-			Button myButton = new Button(this);
-			
-			//Sets text and id to button
-			myButton.setText(head + i);
-			myButton.setId(i);
-			 
+		for(int i = 0; i < count; i++) {
+			Button displayButton = buttonlist.get(i);
 			//Adds button to view with index and parameters
-			llb.addView(myButton, i, lp);
-			myButton.setOnClickListener(new View.OnClickListener() {
-				
-				public void onClick(View arg0) {
-					startActivity(intent);
-				}
-			});
+			if(displayButton.getTag() == tag || tag == null){
+				llb.addView(displayButton, i, lp);
+			}
 		}
 	}
-
+	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present 123.

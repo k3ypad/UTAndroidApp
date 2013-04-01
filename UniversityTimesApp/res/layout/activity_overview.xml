@@ -15,6 +15,16 @@
      android:layout_height="wrap_content"
      android:background="@android:color/transparent"
      android:layout_width="fill_parent"
+     android:text="All"
+     android:textSize="40sp"     
+     android:textColor="#915588"
+     android:onClick="all_section"
+      />
+    
+    <Button
+     android:layout_height="wrap_content"
+     android:background="@android:color/transparent"
+     android:layout_width="fill_parent"
      android:text="News"
      android:textSize="40sp"     
      android:textColor="#915588"

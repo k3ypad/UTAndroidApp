@@ -29,7 +29,7 @@ public class Article{
     public void setHeading(String heading) {
         this.heading = heading;
     }
-    public String getBody() {
+    public String getBody(int code) {
         return body;
     }
     public void setBody(String body) {

@@ -57,9 +57,19 @@ public class Overview extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void all_section(View view) {
+	    // Do something in response to button
+		Intent intent = new Intent(this, MainActivity.class);
+		MainActivity.tag = null;
+        setResult(RESULT_OK, intent);
+        startActivity(intent);
+        finish();
+	}
+	
 	public void news_section(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent();
+		MainActivity.tag = "news";
         setResult(RESULT_OK, intent);
         finish();
 	}
@@ -67,6 +77,7 @@ public class Overview extends Activity {
 	public void opinion_section(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent();
+		MainActivity.tag = "opinion";
         setResult(RESULT_OK, intent);
         finish();
 	}
@@ -74,6 +85,7 @@ public class Overview extends Activity {
 	public void features_section(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent();
+		MainActivity.tag = "features";
         setResult(RESULT_OK, intent);
         finish();
 	}
@@ -81,6 +93,8 @@ public class Overview extends Activity {
 	public void sport_section(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent();
+		MainActivity.tag = "sport";
+		System.out.println(MainActivity.tag);
         setResult(RESULT_OK, intent);
         finish();
 	}
