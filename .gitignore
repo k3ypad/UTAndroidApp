@@ -18,7 +18,4 @@ local.properties
 .idea/
 *.iml
 *.iws
-.DS_Store
-log/
-target/
 out/
