@@ -44,6 +44,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="superfriends.universitytimesapp.MainActivity" />
         </activity>
+        <activity android:name=".DisplayDisqus"
+                  android:parentActivityName="superfriends.universitytimesapp.ArticleActivity"/>
     </application>
 
 </manifest>

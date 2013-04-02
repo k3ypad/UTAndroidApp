@@ -12,9 +12,9 @@ import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
 
 //this class is just for testing at the moment
 public class MainActivity extends Activity implements QueryListener {

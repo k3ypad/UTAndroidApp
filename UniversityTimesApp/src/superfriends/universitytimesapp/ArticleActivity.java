@@ -1,5 +1,6 @@
 package superfriends.universitytimesapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +65,14 @@ public void ArticleLayout() {
 		Button qna = new Button(this);
 		qna.setTextSize(10.0f);
 		qna.setText("Comment");
+        qna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDisqus();
+
+
+            }
+        });
 		
 		// Creates a TextView which houses the article and makes it scrollable
 		TextView article = new TextView(this);	
@@ -97,5 +107,11 @@ public void ArticleLayout() {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    private void startDisqus(){
+        Intent intent = new Intent(this,DisplayDisqus.class);
+        intent.putExtra("id",1);
+        startActivity(intent);
+    }
 
 }
