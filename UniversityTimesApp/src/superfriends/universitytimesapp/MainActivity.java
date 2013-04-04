@@ -1,7 +1,5 @@
 package superfriends.universitytimesapp;
 
-import java.util.ArrayList;
-
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 
 //this class is just for testing at the moment
@@ -42,19 +42,19 @@ public class MainActivity extends Activity implements QueryListener {
         StrictMode.setThreadPolicy(policy);
         ArticleManager articleManager = new ArticleManager();
         
-        String headin;
+        String heading;
 		final Intent intent = new Intent(this, ArticleActivity.class);
-		
 		articles = articleManager.getLatestArticles(count);
 
-		OnClickListener listener = new OnClickListener() {
-            @Override
+		View.OnClickListener listener = new View.OnClickListener() {
+
             public void onClick(View myButton) {
                 int code = myButton.getId();
                 System.out.println("button" + code);
                 a = articles.get(code);
                 String boddy = a.getBody(code);
         		intent.putExtra("maintext", boddy);
+                intent.putExtra("article_id",a.getId());
         		startActivity(intent);
                 }
             };
@@ -66,10 +66,10 @@ public class MainActivity extends Activity implements QueryListener {
         	        myButton.setOnClickListener(listener);
         			
         			a = articles.get(l);
-        			headin = a.getHeading();
+        			heading = a.getHeading();
         			
         			//Sets text and id to button
-        			myButton.setText(headin);
+        			myButton.setText(heading);
         			myButton.getBackground().setAlpha(45);
         			myButton.setId(l);
         			buttonlist.add(myButton);

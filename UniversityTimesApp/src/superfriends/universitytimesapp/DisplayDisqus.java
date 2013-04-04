@@ -1,26 +1,33 @@
 package superfriends.universitytimesapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-/**
- * Created with IntelliJ IDEA.
- * User: tony
- * Date: 02/04/13
- * Time: 00:06
- * To change this template use File | Settings | File Templates.
- */
+
 public class DisplayDisqus extends Activity {
 
+    private int articleId;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WebView disqusView = new WebView(this);
-        setContentView(disqusView);
-        setupActionBar();
+        Intent intent = getIntent();
+        articleId = intent.getIntExtra("articleId",0);
+        setContentView(R.layout.disqus_layout);
+        WebView webDisqus = (WebView) findViewById(R.id.disqus_webview);
+        WebSettings webSettings2 = webDisqus.getSettings();
+        webSettings2.setJavaScriptEnabled(true);
+        webSettings2.setBuiltInZoomControls(true);
+        webDisqus.requestFocusFromTouch();
+        webDisqus.setWebViewClient(new WebViewClient());
+        webDisqus.setWebChromeClient(new WebChromeClient());
+        webDisqus.loadUrl("http://utdummy.tfa.ie/showcomments.php/showcomments.php?disqus_id=" + articleId);
     }
     /**
      * Set up the {@link android.app.ActionBar}.
@@ -40,18 +47,12 @@ public class DisplayDisqus extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // This ID represents the Home or Up button. In the case of this
-                // activity, the Up button is shown. Use NavUtils to allow users
-                // to navigate up one level in the application structure. For
-                // more details, see the Navigation pattern on Android Design:
-                //
-                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-                //
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
 }

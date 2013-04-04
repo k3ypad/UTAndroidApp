@@ -1,11 +1,10 @@
 package superfriends.universitytimesapp;
 
+import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
-import android.content.Intent;
-import android.graphics.Color;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,19 +12,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.support.v4.app.NavUtils;
 
 public class ArticleActivity extends Activity {
     static LayoutParams lpsmallbutton = new LayoutParams(LayoutParams.MATCH_PARENT, 50);
-    static String ArticleBody;
-
+    static String articleBody;
+    private int article_id;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		Intent intent= getIntent();
-		ArticleBody = intent.getStringExtra("maintext"); // will return "FirstKeyValue"
-		
+		articleBody = intent.getStringExtra("maintext"); // will return "FirstKeyValue"
+        article_id = intent.getIntExtra("article_id", 0);
 		overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 		setContentView(R.layout.activity_article);
 		setupActionBar();
@@ -76,7 +74,7 @@ public void ArticleLayout() {
 		
 		// Creates a TextView which houses the article and makes it scrollable
 		TextView article = new TextView(this);	
-		article.setText(ArticleBody);
+		article.setText(articleBody);
 		
 		// Adds everything to the layout with indexes
 	    //lla.addView(ii, 0);
@@ -110,7 +108,7 @@ public void ArticleLayout() {
 
     private void startDisqus(){
         Intent intent = new Intent(this,DisplayDisqus.class);
-        intent.putExtra("id",1);
+        intent.putExtra("articleId",article_id);
         startActivity(intent);
     }
 
