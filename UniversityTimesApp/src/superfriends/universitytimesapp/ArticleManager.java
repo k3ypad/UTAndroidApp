@@ -25,12 +25,23 @@ public class ArticleManager{
     private static int currentId =0;
     public static final int MAX_ARTICLES = 200;
 
+    /*
+     * Method which fetches JSONs from URL and parses it into its separate articles.
+     * The format for the JSON is:
+	 * {
+	 * 	"ID" :
+	 * 	"Heading":
+	 * 	"Body":
+	 * 	"Thumb_nail":
+	 * }
+     */
     public JSONObject getJSONFromUrl(String url) throws JSONException {
 
         // Making HTTP request
         try {
             // default HTTPClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+        	// fetches JSON from the given URL
+            DefaultHttpClient httpClient = new DefaultHttpClient();	
             HttpGet httpGet = new HttpGet(url);
 
             HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -42,13 +53,13 @@ public class ArticleManager{
             StringBuilder sb = new StringBuilder();
             String line = "";
 
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            while ((line = reader.readLine()) != null) {		// 
+                sb.append(line + "\n");		// builds a string with made up of the JSON file
             }
             is.close();
-            json = sb.toString();
+            json = sb.toString();			
 
-            jObj = new JSONObject(json);
+            jObj = new JSONObject(json); 	// make a JSON Object using the json string from the url
         }catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -65,33 +76,36 @@ public class ArticleManager{
         return jObj;
 
     }
-
+/*
+ * Method which fetches the next article from server
+ * it does this by storing the current ID of the last article
+ * and fetching the next valid article
+ * It calls the getJSONFromUrl to get the new JSON and stores
+ * it as an article
+ */
     public Article getNextArticle() throws JSONException{
         jObj = null;
         String sb = "";
         Article myArticle = null;
         while(jObj==null){
             currentId++;
-            if(currentId == 200){
-                currentId = 0;
+            if(currentId == 200){		// if currentId is less than the max articles
+                currentId = 0;			// currentId goes back to start
             }
-            sb= sb + "http://utdummy.tfa.ie/";
+            sb= sb + "http://utdummy.tfa.ie/";		// makes a URL using the CurrentId 
             sb = sb + currentId;
             sb = sb +".json";
 
             try {
-                JSONObject jObj = getJSONFromUrl(sb.toString());
-                if(jObj == null ){
-                    System.out.println("we fucked up" + currentId);
-                }
+                JSONObject jObj = getJSONFromUrl(sb.toString());	// calls getJsonFromUrl method
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             sb = "";
             if(jObj!=null){
-                myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),
-                        jObj.getString("Post_tag")
+                myArticle = new Article(jObj.getInt("ID"), jObj.getString("Post_title"),	// parses the JSON file and stores them in the article 
+                        jObj.getString("Post_tag")											// under their appropriate headings
                         ,jObj.getString("Post_body"), jObj.getString("Thumb_url"));
                 Log.i("article id: ", String.valueOf(myArticle.getId()));
             }
@@ -99,18 +113,18 @@ public class ArticleManager{
 
         return myArticle;
     }
-
+/*
+ * This calls the getNextArticle() a specified amount of times, 
+ * by the parametre passed in from the main 
+ */
     public ArrayList<Article> getLatestArticles(int number){
         ArrayList<Article> articles = new ArrayList<Article>();
-        for(int i=0 ; i< number; i++){
+        for(int i=0 ; i< number; i++){							
             try {
-                Article myArticle = getNextArticle();
-                articles.add(myArticle);
-                currentId = myArticle.getId();
-                System.out.println("HI " + myArticle.getId());
-//				System.out.println("HI " + myArticle.getHeading());
-//				System.out.println("HI " + myArticle.getBody());
-//				System.out.println("HI " + myArticle.getUrl());
+                Article myArticle = getNextArticle();			// calls the getNextArticle method the specified amount of times
+                articles.add(myArticle);						// adds the current article to the arrayList of articles
+                currentId = myArticle.getId();					// updates currentId
+                
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
@@ -118,24 +132,6 @@ public class ArticleManager{
             }
 
         }
-		/*
-		 * implement code that will fetch JSON parse and convert it into
-		 * Articles. Create additional classes/methods if you feel appropriate
-		 * or extends/modify existing.
-		 * Articles start from 1 and end 100 and are static json pages.
-		 * the url format is http://utdummy.tfa.ie/<number>.json
-		 *
-		 * the format for the json is:
-		 *
-		 * {
-		 * 	"ID" :
-		 * 	"Heading":
-		 * 	"Body":
-		 * 	"Thumb_nail":
-		 * }
-		 *
-		 * There won't be more than 100 articles at any given time.
-		 * */
 
 
         return articles;
@@ -150,24 +146,5 @@ public class ArticleManager{
         return articles;
     }
 
-	/*
-  private class articleRequest extends AsyncTask<String, Void, String>{
-    private Article article;
 
-    public articleRequest(Article article){
-        this.article = article;
-    }
-
-    protected String doInBackground(String... params) {
-
-    	return null;
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-
-    }
-  }     
-	 */
 }
