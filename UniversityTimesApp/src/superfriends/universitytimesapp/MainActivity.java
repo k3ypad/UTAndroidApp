@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -20,7 +21,10 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements QueryListener {
 
     public static final String HTML_PAGE = "superfriends.universitytimesapp.HTML_PAGE";
+    
+    // size of the buttons
     static LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 200);
+    
     static ArrayList<Article> articles;
     static Article a;
     static Button myButton;
@@ -33,6 +37,8 @@ public class MainActivity extends Activity implements QueryListener {
 		
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
+	    
+	    // Creates an array which will store each button
 	    buttonlist = new ArrayList<Button>();
 	    
 		getActionBar().setDisplayShowTitleEnabled(false);
@@ -40,17 +46,27 @@ public class MainActivity extends Activity implements QueryListener {
 		if(tag == null){
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        
+        // Used to get articles from ArticleManager
         ArticleManager articleManager = new ArticleManager();
         
         String heading;
-		final Intent intent = new Intent(this, ArticleActivity.class);
-		articles = articleManager.getLatestArticles(count);
+		
+        // Sets up for Article activity
+        final Intent intent = new Intent(this, ArticleActivity.class);
+		
+        // Gets a certain amount of articles at a time
+        articles = articleManager.getLatestArticles(count);
 
 		View.OnClickListener listener = new View.OnClickListener() {
-
+			
+			/**
+			 * On click listener set up so that it gets the article
+			 * id and passes the appropriate article to be used to
+			 * the ArticleActivity class, done by the putExtra method
+			 */
             public void onClick(View myButton) {
                 int code = myButton.getId();
-                System.out.println("button" + code);
                 a = articles.get(code);
                 String boddy = a.getBody(code);
         		intent.putExtra("maintext", boddy);
@@ -58,20 +74,33 @@ public class MainActivity extends Activity implements QueryListener {
         		startActivity(intent);
                 }
             };
-        
+            	/**
+            	 * This loop loops through all of the articles that have
+            	 * being downloaded and creates a button using the information
+            	 * of each and then stores each button in an array list to be used
+            	 * later on
+            	 */
                 for(int l = 0; l < count; l++){
                 	myButton = new Button(this);
         			
         			// Set the click listener to all your buttons
         	        myButton.setOnClickListener(listener);
         			
-        			a = articles.get(l);
-        			heading = a.getHeading();
+        	        a = articles.get(l); //gets the specified article
+        			heading = a.getHeading(); //gets heading of specified article
         			
         			//Sets text and id to button
         			myButton.setText(heading);
         			myButton.getBackground().setAlpha(45);
-        			myButton.setId(l);
+        			
+        			//Adds a little img to each button
+        			Drawable img = getBaseContext().getResources().getDrawable( R.drawable.cool);
+        			img.setBounds( 0, 0, 100, 100 );
+        			myButton.setCompoundDrawables( img, null, null, null );
+        			
+        			myButton.setId(l); //very important so the phone knows which article has being clicked
+        			
+        			//adds the new button to the arraylist
         			buttonlist.add(myButton);
          }
 	     ButtonLayout();
@@ -83,7 +112,7 @@ public class MainActivity extends Activity implements QueryListener {
 		final LinearLayout llb = (LinearLayout)findViewById(R.id.buttonlayout);
 		
 		
-		//Creates new buttons and indexes
+		//Creates new buttons and indexes loops through adding them dynamically
 		for(int i = 0; i < count; i++) {
 			Button displayButton = buttonlist.get(i);
 			//Adds button to view with index and parameters

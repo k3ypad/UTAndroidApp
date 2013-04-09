@@ -51,15 +51,14 @@ public void ArticleLayout() {
 		 * button and when pressed it will switch
 		 * to the previous layout
 		 */
-
+		// Sets the desired layout
 		LinearLayout lla = (LinearLayout)findViewById(R.id.articlelayout);
-		String body = getString(R.string.dummyBody);
 		
 		// Gets the image file for the article
 		ImageView ii = new ImageView(this);
 		ii.setImageResource(R.drawable.cool);
 
-		// Creates QnA button
+		// Creates QnA button and on onClickListener for the button
 		Button qna = new Button(this);
 		qna.setTextSize(10.0f);
 		qna.setText("Comment");
@@ -67,8 +66,6 @@ public void ArticleLayout() {
             @Override
             public void onClick(View v) {
                 startDisqus();
-
-
             }
         });
 		
@@ -77,9 +74,9 @@ public void ArticleLayout() {
 		article.setText(articleBody);
 		
 		// Adds everything to the layout with indexes
-	    //lla.addView(ii, 0);
-		lla.addView(article, 0);
-		lla.addView(qna, 1, lpsmallbutton);
+	    lla.addView(ii, 0);
+		lla.addView(article, 1);
+		lla.addView(qna, 2, lpsmallbutton);
 	}
 
 	@Override
