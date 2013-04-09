@@ -57,6 +57,10 @@ public class Overview extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Below represents all the buttons on the overview activity
+	 */
+	
 	public void all_section(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent(this, MainActivity.class);

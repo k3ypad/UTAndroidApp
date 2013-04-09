@@ -5,31 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="message">Hello world!</string>
     <string name="title_activity_display_html">Display HTML</string>
-    <string name="dummyHead">North Korea bombs new york with a nuclear missile strike</string>
-    <string name="dummyBody">The first motion was an existing motion which is set to expire next 
-        year in accordance with protocol, and was put before Congress to retain or see lapse. 
-        The motion, titled ‘female participation  sought to mandate the USI Equality officer to 
-        run a campaign highlighting the ‘persistent inequalities between men and women in Irish 
-        society’ and to work with other organisations who ‘share (our) vision for an equal society’. 
-        A number of student delegates spoke for and against the motion, with those in opposition 
-        arguing that the motion was ‘offensive’ and ‘insulting’ to women.
-        
-        A second motion, proposed by Saint Angela’s College Students’ Union, sought to realise 
-        greater female participation within the student movement, arguing that such a move would 
-        lead to the perception of USI as a ‘more inclusive structure’. In a repeat of many of the 
-        arguments made during the earlier debate, a number of delegates spoke of the ‘discriminatory’ 
-        nature of the motion, with a general sentiment suggesting the impetus to seek public office 
-        was the responsibility of the individual and USI should not actively seek to promote greater 
-        female participation within its structures. One delegate stated that ‘no one needs to be 
-        segregated by USI’ while another argued that candidates for public office should be elected on 
-        merit and women did not need to be encouraged to seek nominations.
-        
-        Speaking to this reporter, SU Welfare officer Aisling Ní Chonaire labeled the decisions 
-        ‘incredibly disappointing’ and ‘regressive’. She went on to comment that it was ‘important 
-        to realise that these motions were concerned with the ‘fundamental societal and structural 
-        barriers, as found in evidence-based research such as ‘Women’s Participation in Politics 
-        daily basis. This is seen clearly in our own students’ union, with 60 of our total population 
-        comprising of women, but women remain grossly underrepresented in the corridors of influence and power.</string>
     <string name="title_activity_article">Article</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_display_message">DisplayMessageActivity</string>

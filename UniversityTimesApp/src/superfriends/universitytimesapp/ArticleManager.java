@@ -82,7 +82,7 @@ public class ArticleManager{
             try {
                 JSONObject jObj = getJSONFromUrl(sb.toString());
                 if(jObj == null ){
-                    System.out.println("we fucked up" + currentId);
+                    //System.out.println("we fucked up" + currentId);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
