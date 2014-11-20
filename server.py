@@ -34,7 +34,7 @@ class Connection:
     
 # Initial test function for testing mysql connections
     def do_da_database_shake(self):
-        db = MySQLdb.connect('localhost', 'utdummyuser', 'utdummyuser123', 'utdummy')
+        db = MySQLdb.connect('localhost', 'username', 'password', 'database') #fill in as needed
         cur = db.cursor()
 
         cur.execute("SELECT post_content from wp_posts WHERE ID='10'")
